@@ -6,7 +6,7 @@ export type CalculationResult = {
 
 // TODO: Pass through calculation (with type safety if possible)
 // TODO: Write unit tests for Calculator functions
-export const calculate = (type: CalculationType, inputs: unknown): CalculationResult=> {
+export const calculate = (type: CalculationType, inputs: unknown): CalculationResult => {
   const mapping: Record<CalculationType, (data: unknown) => CalculationResult> = {
     transportation: calculateTransportation,
     food: calculateFood

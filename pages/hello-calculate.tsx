@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import { Button, Card, Form, Space } from 'antd'
-import { Calculate } from './api/calculate'
+import { CalculateApi } from './api/calculate'
 import { useState } from 'react'
 
 const CalculatePage: NextPage = () => {
@@ -11,7 +11,7 @@ const CalculatePage: NextPage = () => {
     // Stop the form from submitting and refreshing the page.
     event.preventDefault()
 
-    const data: Calculate.RequestBody = {
+    const data: CalculateApi.RequestBody = {
       calculations: {
         food: {
           calories: 1000
@@ -33,7 +33,7 @@ const CalculatePage: NextPage = () => {
 
     // Get the response data from server as JSON.
     // If server returns the name submitted, that means the form works.
-    const result: Calculate.ResponseBody = await response.json()
+    const result: CalculateApi.ResponseBody = await response.json()
     console.log(result)
 
 

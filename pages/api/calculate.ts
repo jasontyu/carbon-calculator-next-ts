@@ -6,11 +6,11 @@ import { withValidationHandled } from '../../utils/middlewares'
 // TODO: setup jest with node environment to run server tests with scope
 // OR setup e2e tests with cypress or playwright
 
-export namespace Calculate {
+export namespace CalculateApi {
   export type RequestBody = z.infer<typeof CalculateRequestBodySchema> // Zod TS magic
   export type ResponseBody = { calculation: Partial<Record<CalculationType, CalculationResult>> }
 }
-export type CalculationType = keyof Calculate.RequestBody['calculations']
+export type CalculationType = keyof CalculateApi.RequestBody['calculations']
 
 // Zod enables validation and internal types to use same source of truth
 const CalculateRequestBodySchema = z
@@ -29,7 +29,7 @@ const CalculateRequestBodySchema = z
     'Must contain at least one calculationType'
   )
 
-const handler: NextApiHandler<Calculate.ResponseBody> = (req, res) => {
+const handler: NextApiHandler<CalculateApi.ResponseBody> = (req, res) => {
   // switch-case on HTTP verb is the recommended way to structure RESTful API handles in NextJs
   // alternatively, we could simplify the indentation with an early return:
   //   if (req.method !== 'POST') {
@@ -37,7 +37,7 @@ const handler: NextApiHandler<Calculate.ResponseBody> = (req, res) => {
   //   }
   //   ...happy path
   switch (req.method) {
-    case 'POST':
+    case 'POST': {
       const { calculations } = CalculateRequestBodySchema.parse(req.body) // throws ZodError, which is caught by withValidationHandler 
 
       const calculationTypes = Object.keys(calculations) as CalculationType[]
@@ -49,6 +49,7 @@ const handler: NextApiHandler<Calculate.ResponseBody> = (req, res) => {
         }, {} as Partial<Record<CalculationType, CalculationResult>>)
 
       return res.status(200).json({ calculation: results })
+    }
     default:
       res.setHeader('Allow', ['POST'])
       return res.status(405).end(`Method ${req.method} Not Allowed`)
