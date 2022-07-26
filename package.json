@@ -7,13 +7,22 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "test": "jest",
+    "test-client": "jest --selectProjects client",
+    "test-server": "jest --selectProjects server"
+  },
+  "jest": {
+    "projects": [
+      "<rootDir>/jest.client.config.js",
+      "<rootDir>/jest.server.config.js"
+    ]
   },
   "dependencies": {
     "antd": "^4.21.7",
     "next": "12.2.2",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "zod": "^3.17.10"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.4",
@@ -23,6 +32,7 @@
     "@types/node": "18.0.6",
     "@types/react": "18.0.15",
     "@types/react-dom": "18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
     "eslint": "8.20.0",
     "eslint-config-next": "12.2.2",
     "jest": "^28.1.3",
