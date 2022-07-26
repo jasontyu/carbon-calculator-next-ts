@@ -3,6 +3,9 @@ import { z } from 'zod'
 import { calculate, CalculationResult } from '../../services/EmissionsCalculator'
 import { withValidationHandled } from '../../utils/middlewares'
 
+// TODO: setup jest with node environment to run server tests with scope
+// OR setup e2e tests with cypress or playwright
+
 export namespace Calculate {
   export type RequestBody = z.infer<typeof CalculateRequestBodySchema> // Zod TS magic
   export type ResponseBody = { calculation: Partial<Record<CalculationType, CalculationResult>> }
