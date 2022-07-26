@@ -45,10 +45,10 @@ const handler: NextApiHandler<Calculate.ResponseBody> = (req, res) => {
           return acc
         }, {} as Partial<Record<CalculationType, CalculationResult>>)
 
-      res.status(200).json({ calculation: results })
+      return res.status(200).json({ calculation: results })
     default:
       res.setHeader('Allow', ['POST'])
-      res.status(405).end(`Method ${req.method} Not Allowed`)
+      return res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 }
 
