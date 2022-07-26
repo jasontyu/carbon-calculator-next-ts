@@ -4,6 +4,8 @@ export type CalculationResult = {
   emissions: number
 }
 
+// TODO: Pass through calculation (with type safety if possible)
+
 export const calculate = (type: CalculationType, inputs: unknown): CalculationResult=> {
   const mapping: Record<CalculationType, (data: unknown) => CalculationResult> = {
     transportation: calculateTransportation,
