@@ -5,7 +5,7 @@ import { z } from 'zod'
 // implemented as an HOC according to https://github.com/vercel/next.js/discussions/17832#discussioncomment-945043
 export const withValidationHandled = (handler: NextApiHandler): NextApiHandler => (req, res) => {
   try {
-      // run handler
+    // run handler
     return handler(req, res)
   } catch (error) {
     // if validation error, return 400

@@ -38,7 +38,7 @@ const handler: NextApiHandler<CalculateApi.ResponseBody> = (req, res) => {
   //   ...happy path
   switch (req.method) {
     case 'POST': {
-      const { calculations } = CalculateRequestBodySchema.parse(req.body) // throws ZodError, which is caught by withValidationHandler 
+      const { calculations } = CalculateRequestBodySchema.parse(req.body) // throws ZodError, which is caught by withValidationHandled
 
       const calculationTypes = Object.keys(calculations) as CalculationType[]
       const results = calculationTypes
