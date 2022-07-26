@@ -8,11 +8,11 @@ export type CalculationResult = {
 // TODO: Write unit tests for Calculator functions
 export const calculate = (type: CalculationType, inputs: unknown): CalculationResult => {
   const mapping: Record<CalculationType, (data: unknown) => CalculationResult> = {
-    transportation: calculateTransportation,
-    food: calculateFood
+    food: calculateFood,
+    transportation: calculateTransportation
   }
   return mapping[type](inputs)
 }
 
-const calculateTransportation = (inputs: unknown) => ({ emissions: 42 })
-const calculateFood = (inputs: unknown) => ({ emissions: 9999 })
+export const calculateFood = (inputs: unknown) => ({ emissions: 9999 })
+export const calculateTransportation = (inputs: unknown) => ({ emissions: 42 })
