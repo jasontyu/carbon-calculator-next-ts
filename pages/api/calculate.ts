@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { calculate, CalculationResult } from '../../services/EmissionsCalculator'
 import { withValidationHandled } from '../../utils/middlewares'
 
-// TODO: setup jest with node environment to run server tests with scope
+// TODO: write server tests with nock
 // OR setup e2e tests with cypress or playwright
 
 export namespace CalculateApi {

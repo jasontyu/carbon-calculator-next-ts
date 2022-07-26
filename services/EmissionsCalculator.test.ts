@@ -52,7 +52,6 @@ describe('EmissionsCalculator', () => {
       expect(result).toStrictEqual({ emissions: 9999 })
       expect(calculateFood).toHaveBeenCalled()
     })
-
   })
 
   describe('calculateTransportation', () => {
@@ -60,7 +59,6 @@ describe('EmissionsCalculator', () => {
       const result = EmissionsCalculator.calculateTransportation(0)
       expect(result).toStrictEqual({ emissions: 42 })
       expect(calculateTransportation).toHaveBeenCalled()
-
     })
   })
 })

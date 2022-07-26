@@ -8,8 +8,7 @@ const CalculatePage: NextPage = () => {
   const [emissions, setEmissions] = useState<number | null>(null)
 
   const handleCalculate = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    // Stop the form from submitting and refreshing the page.
-    event.preventDefault()
+    event.preventDefault() // Stop the form from submitting and refreshing the page.
 
     const data: CalculateApi.RequestBody = {
       calculations: {
@@ -22,7 +21,6 @@ const CalculatePage: NextPage = () => {
       }
     }
 
-    // Send the form data to our forms API on Vercel and get a response.
     const response = await fetch('/api/calculate', {
       method: 'POST',
       headers: {
@@ -31,16 +29,14 @@ const CalculatePage: NextPage = () => {
       body: JSON.stringify(data),
     })
 
-    // Get the response data from server as JSON.
-    // If server returns the name submitted, that means the form works.
     const result: CalculateApi.ResponseBody = await response.json()
     console.log(result)
-
 
     // TODO: Consider moving totalEmissions calculation into backend
     const totalEmissions = (result.calculation?.food?.emissions || 0) + ( result.calculation?.transportation?.emissions || 0)
     setEmissions(totalEmissions)
   }
+
 	return (
 		<div>
 			<Space direction='vertical'>
