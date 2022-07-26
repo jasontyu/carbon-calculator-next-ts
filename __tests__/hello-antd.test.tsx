@@ -1,6 +1,6 @@
 import 'jest'
 import { render, screen } from '@testing-library/react'
-import AntdPage from './hello-antd'
+import AntdPage from '../pages/hello-antd'
 
 describe('antd', () => {
   it('should contain button', () => {

@@ -12,7 +12,7 @@ const customJestConfig = {
   displayName: 'client',
   testMatch: [
     "<rootDir>/components/*.test.{ts,tsx}",
-    "<rootDir>/pages/*.test.{ts,tsx}",
+    "<rootDir>/__tests__/*.test.{ts,tsx}",
   ],
 
   setupFilesAfterEnv: ['<rootDir>/jest.client.setup.js'],
