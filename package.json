@@ -7,7 +7,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "test": "jest",
+    "test-client": "jest --selectProjects client",
+    "test-server": "jest --selectProjects server"
+  },
+  "jest": {
+    "projects": [
+      "<rootDir>/jest.client.config.js",
+      "<rootDir>/jest.server.config.js"
+    ]
   },
   "dependencies": {
     "antd": "^4.21.7",

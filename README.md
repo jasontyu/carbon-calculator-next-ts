@@ -6,9 +6,12 @@ First, run `yarn` to install packages locally.
 
 Run `yarn dev` to run the development server and open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-See also
+### Commands
 - `yarn lint`
-- `yarn test` 
+- `yarn test`
+  - `yarn test <specific-file.test.ts>`
+  - `yarn test-client`
+  - `yarn test-server`
 
 ### Developing in Next.js
 
@@ -30,4 +33,4 @@ This app is deployed using use the [Vercel Platform](https://vercel.com/new?utm_
 - main branch is auto-rebuilt and deployed to main site `carbon-calculator-next-ts.vercel.app`
 
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Check out [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
