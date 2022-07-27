@@ -167,7 +167,6 @@ const Home: NextPage = () => {
           <Card title='Emissions' size='default' extra={
             <Button onClick={ () => setCalculations({}) } type='ghost' >Reset</Button>
           }>
-            {/* TODO: round to nearest digit  */}
             <Title level={2}>Total: { totalEmissions }</Title>
 
               { allCalculationTypes.map(ctype => (
