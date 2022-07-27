@@ -123,7 +123,7 @@ const Home: NextPage = () => {
                     initialValue={ 0 }
                   >
                     <InputNumber min={0} addonAfter={ 'miles/day' }/>
-                    {/* Nice to have: add a switcher for miles/kg, provide context, and pass through to api as optional arg */}
+                    {/* Nice to have: add a switcher for miles/km, provide context, and pass through to api as optional arg */}
                   </Form.Item>
                 )) }
 
@@ -143,9 +143,9 @@ const Home: NextPage = () => {
         </Content>
         <Footer style={{ textAlign: 'center' }}>
           <Space direction='vertical'>
-
-            <Text>Source code on <Link href='https://github.com/jasontyu/carbon-calculator-next-ts'>GitHub</Link></Text>
-            <Text>Component library by <Link href='https://ant.design/'>AntDesign</Link></Text>
+            <Text>Source code on <Link href='https://github.com/jasontyu/carbon-calculator-next-ts' target='_blank'>GitHub</Link></Text>
+            <Text>Component library by <Link href='https://ant.design/' target='_blank'>AntDesign</Link></Text>
+            <Text>Powered by <Link href='https://vercel.com/' target='_blank'>Vercel</Link></Text>
           </Space>
         </Footer>
       </Layout>
