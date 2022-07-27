@@ -10,7 +10,11 @@ export const withValidationHandled = (handler: NextApiHandler): NextApiHandler =
   } catch (error) {
     // if validation error, return 400
     if (error instanceof z.ZodError) {
-      return res.status(400).json({ reason: error.issues[0] }) // for safety, don't reflect all errors, but provide enough info to incrementally fix
+
+      // Hack: mimic access log
+      console.log('400', req.method, req.url, req.body, ' -> ', { reason: error.issues[0] })
+  
+      return res.status(400).json({ reason: error.issues[0] })  // for safety, don't reflect all errors, but provide enough info to incrementally fix
     }
     // otherwise, let default error handler handle it
     throw error
