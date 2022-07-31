@@ -1,20 +1,16 @@
 import type { NextPage } from 'next'
 import React, { useState } from 'react'
 
-import { Typography, Layout, Space, Card, BackTop, InputNumber, Form, Button, Divider } from 'antd'
+import { Typography, Layout, Space, Card, BackTop, InputNumber, Form, Button } from 'antd'
 import { CalculateApi, CalculationType } from './api/calculate'
+import { Sidebar, SIDEBAR_WIDTH } from '../components/Sidebar'
 
 const { Title, Text, Link } = Typography
-const { Header, Content, Footer, Sider } = Layout
+const { Header, Content, Footer } = Layout
 
 type Calculations = CalculateApi.ResponseBody['calculation']
 
-const allCalculationTypes: CalculationType[]  = [
-  'food',
-  'transportation'
-]
 
-const sideBarWidth = 300
 
 // TODO: move to separate file and unit tests
 // nice-to-have: consider extracting higher-order-function  createFetch<RequestBody, ResponseBody> (route: string): async (requestBody: RequestBody) => ResponseBody
@@ -63,7 +59,7 @@ const Home: NextPage = () => {
   return (
     <Layout hasSider>
       <BackTop />
-      <Layout className="site-layout" style={{ marginRight: sideBarWidth }}>
+      <Layout className="site-layout" style={{ marginRight: SIDEBAR_WIDTH }}>
         <Header className="site-layout-background" style={{ padding: 24, height: 84, backgroundColor: 'lightgreen'}}>
           <Title>Personal Carbon Footprint Calculator</Title>
         </Header>
@@ -149,36 +145,7 @@ const Home: NextPage = () => {
           </Space>
         </Footer>
       </Layout>
-      <Sider
-        width={sideBarWidth}
-        style={{
-          overflow: 'auto',
-          height: '100vh',
-          position: 'fixed',
-          right: 0,
-          top: 0,
-          bottom: 0,
-          backgroundColor: 'lightgray'
-        }}
-      >
-        <div style={{ padding: 0, marginTop: '64px', backgroundColor: 'lightgreen'}} />
-
-        <Space direction='vertical' size='middle' style={{ margin: '0 12px', width: '276px' }}>
-          <Card title='Emissions' size='default' extra={
-            <Button onClick={ () => setCalculations({}) } type='ghost' >Reset</Button>
-          }>
-            <Title level={2}>Total: { totalEmissions }</Title>
-            { allCalculationTypes.map(ctype => (
-              <li key={ctype}>
-                <Text strong>{ctype}: </Text>
-                <Text>{calculations[ctype]?.emissions || 'Not yet calculated' }</Text>
-              </li>
-            ))}
-            <Divider />
-            <Text type='secondary'>kg CO2eq / day</Text>
-          </Card>
-        </Space>
-      </Sider>
+      <Sidebar { ...{totalEmissions, calculations, resetCalculations: () => setCalculations({}) }}/>
     </Layout>
   )
 }

@@ -1,7 +1,7 @@
 # What is this folder?
-This folder stores tests for client components stored in `/pages`.
+This folder stores tests for client code stored in `/pages`.
 
-Note that all other tests are colocated with the files they test.
+Note that all other tests are colocated with the files they test, including components in `/components`.
 
 # If we colocate tests,  why does this `__tests__` folder exist?
 
