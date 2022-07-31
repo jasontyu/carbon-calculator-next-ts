@@ -1,16 +1,16 @@
-import { CalculateApi } from "../pages/api/calculate"
+import { CalculateApi } from "../../pages/api/calculate"
 
 export type CalculationResult = {
   emissions: number
 }
 
 // Intermediary type with type discrimination allows mapping of generic calculate to strongly typed helpers
-export type CalculationInput = { ctype: 'food' } & CalculateApi.RequestBody['calculations']['food'] 
+export type CalculationInput = { ctype: 'food' } & CalculateApi.RequestBody['calculations']['food']
   | { ctype: 'transportation' } & CalculateApi.RequestBody['calculations']['transportation']
 
 export const calculate = (input: CalculationInput): CalculationResult => {
   switch (input.ctype) {
-    case 'food': { 
+    case 'food': {
       const { ctype, ...data } = input
       return calculateFood(data)
     }
@@ -45,13 +45,13 @@ export const calculateTransportation = (data: Required<CalculateApi.RequestBody[
   // TODO: include CH4 and N2O factors in terms of kg CO2eq
   const factors: Record<keyof typeof data, number> = {
     plane: 0.133, // Air Travel, medium-haul (passenger-mile)
-    car: 0.335, // Passenger Car 
+    car: 0.335, // Passenger Car
     bus: 0.053 // Bus
   }
   const emissions = (Object.keys(data) as (keyof typeof data)[]) // TS loses type safety when iterating objects so we need to do this redundant looking cast
     .map(key => factors[key] * data[key])
     .reduce((sum, next) => sum + next, 0)
-  
+
   return { emissions }
 }
 

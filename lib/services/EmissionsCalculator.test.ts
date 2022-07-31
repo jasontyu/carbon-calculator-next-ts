@@ -1,5 +1,5 @@
 import 'jest'
-import { CalculationType } from '../pages/api/calculate'
+import { CalculationType } from '../../pages/api/calculate'
 
 import * as EmissionsCalculator from './EmissionsCalculator'
 
@@ -15,7 +15,7 @@ describe('EmissionsCalculator', () => {
   })
 
   describe('calculate calls through to helper correctly', () => {
-    type TestCase = { type: CalculationType, input: any, spy: keyof typeof EmissionsCalculator }
+    type TestCase = { type: CalculationType, input: unknown, spy: keyof typeof EmissionsCalculator }
     const cases: TestCase[] = [
       { type: 'food', input: 42, spy: 'calculateFood' },
       { type: 'transportation', input: 42, spy: 'calculateTransportation' },
@@ -28,7 +28,7 @@ describe('EmissionsCalculator', () => {
         const { type, input, spy } = testCase
         it.skip(`for type '${type}'`, () => {
           const spyInstance = jest.spyOn(EmissionsCalculator, spy)
-          EmissionsCalculator.calculate(type, input)
+          EmissionsCalculator.calculate(input)
           expect(spyInstance).toHaveBeenCalledWith(input)
       })
     }
@@ -38,7 +38,7 @@ describe('EmissionsCalculator', () => {
     const itShouldReturnSameValue = (testCase: TestCase) => {
       const { type, input, spy } = testCase
         it(`for type '${type}'`, () => {
-          const result1 = EmissionsCalculator.calculate(type, input)
+          const result1 = EmissionsCalculator.calculate(input)
           const result2 = (EmissionsCalculator[spy] as any).apply(input)
           expect(result1).toStrictEqual(result2)
       })
