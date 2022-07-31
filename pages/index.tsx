@@ -64,9 +64,9 @@ const Home: NextPage = () => {
     <Layout hasSider>
       <BackTop />
       <Layout className="site-layout" style={{ marginRight: sideBarWidth }}>
-      <Header className="site-layout-background" style={{ padding: 24, height: 84, backgroundColor: 'lightgreen'}}>
-        <Title>Personal Carbon Footprint Calculator</Title>
-      </Header>
+        <Header className="site-layout-background" style={{ padding: 24, height: 84, backgroundColor: 'lightgreen'}}>
+          <Title>Personal Carbon Footprint Calculator</Title>
+        </Header>
         <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
           <Space direction='vertical' style={{ padding: 24, textAlign: 'left' }}>
             <Card title='Food' style={{ width: '100%' }}>
@@ -168,13 +168,12 @@ const Home: NextPage = () => {
             <Button onClick={ () => setCalculations({}) } type='ghost' >Reset</Button>
           }>
             <Title level={2}>Total: { totalEmissions }</Title>
-
-              { allCalculationTypes.map(ctype => (
-                <li key={ctype}>
-                  <Text strong>{ctype}: </Text>
-                  <Text>{calculations[ctype]?.emissions || 'Not yet calculated' }</Text>
-                </li>
-              ))}
+            { allCalculationTypes.map(ctype => (
+              <li key={ctype}>
+                <Text strong>{ctype}: </Text>
+                <Text>{calculations[ctype]?.emissions || 'Not yet calculated' }</Text>
+              </li>
+            ))}
             <Divider />
             <Text type='secondary'>kg CO2eq / day</Text>
           </Card>

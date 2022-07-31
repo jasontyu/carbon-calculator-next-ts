@@ -1,16 +1,19 @@
 {
   "extends": [
     "eslint:recommended",
+    "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "next/core-web-vitals" // https://nextjs.org/docs/basic-features/eslint
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": { "project": ["./tsconfig.json"] },
   "plugins": [
-      "@typescript-eslint"
+      "@typescript-eslint",
+      "react"
   ],
   "rules": {
     "@typescript-eslint/no-namespace": "off",
-    "no-trailing-spaces": "warn"
+    "no-trailing-spaces": "warn",
+    "react/jsx-indent": ["warn", 2] // 2 space indents for JSX
   }
 }
