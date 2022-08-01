@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { Typography, Layout, Space, Card, BackTop, InputNumber, Form, Button } from 'antd'
 import { CalculateApi, CalculationType } from './api/calculate'
 import { Sidebar, SIDEBAR_WIDTH } from '../components/Sidebar'
+import { CalculationCard } from '../components/CalculationCard'
 
 const { Title, Text, Link } = Typography
 const { Header, Content, Footer } = Layout
@@ -36,6 +37,8 @@ const fetchCalculation = async (requestBody: CalculateApi.RequestBody) => {
 // TODO: make sidebar responsive for mobile
 const Home: NextPage = () => {
   const [calculations, setCalculations] = useState<Calculations>({})
+
+  // todo: pull totalEmissions calculation into Sidebar
   const totalEmissions = (Object.keys(calculations) as CalculationType[])
     .map((ctype)=> calculations[ctype]?.emissions || 0)
     .reduce((prev, next) => prev+next, 0)
@@ -56,6 +59,18 @@ const Home: NextPage = () => {
 
   }
 
+  const foodFields = [
+    { label: 'Meat', name: 'meat' },
+    { label: 'Vegetables', name: 'vegetables' },
+    { label: 'Bread', name: 'bread' },
+  ] as const
+
+  const transportationFields = [
+    { label: 'Plane', name: 'plane' },
+    { label: 'Car', name: 'car' },
+    { label: 'Bus', name: 'bus' },
+  ] as const
+
   return (
     <Layout hasSider>
       <BackTop />
@@ -65,71 +80,43 @@ const Home: NextPage = () => {
         </Header>
         <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
           <Space direction='vertical' style={{ padding: 24, textAlign: 'left' }}>
-            <Card title='Food' style={{ width: '100%' }}>
-              <Form
-                name='food'
-                labelCol={{ span: 8 }}
-                wrapperCol={{ span: 16 }}
-                onFinish={ (values) => updateCalculations({ food: values }) }
-                onFinishFailed={ (errorInfo) => console.error(errorInfo) }
-              >
-                { [
-                  { label: 'Meat', name: 'meat' },
-                  { label: 'Vegetables', name: 'vegetables' },
-                  { label: 'Bread', name: 'bread' },
-                ].map(({ label, name }) => (
-                  <Form.Item
-                    key={ name }
-                    label={ label }
-                    name={ name }
-                    rules={[{ required: true }]}
-                    initialValue={ 0 }
-                  >
-                    <InputNumber min={0} addonAfter={ 'calories/day' }/>
-                    {/* Nice to have: render % to help fiddle with numbers */}
-                  </Form.Item>
-                )) }
-
-                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                  <Button type="primary" htmlType="submit">
-                    Submit
-                  </Button>
+            <CalculationCard
+              name='food'
+              title='Food'
+              onSubmit={ (values ) => updateCalculations({ food: values as Record<typeof foodFields[number]['name'], number> })}
+            >
+              { foodFields.map(({ label, name }) => (
+                <Form.Item
+                  key={ name }
+                  label={ label }
+                  name={ name }
+                  rules={[{ required: true }]}
+                  initialValue={ 0 }
+                >
+                  <InputNumber min={0} addonAfter={ 'calories/day' }/>
+                  {/* Nice to have: render % to help fiddle with numbers */}
                 </Form.Item>
-              </Form>
-            </Card>
+              )) }
+            </CalculationCard>
 
-            <Card title='Transportation'>
-              <Form
-                name='transportation'
-                labelCol={{ span: 8 }}
-                wrapperCol={{ span: 16 }}
-                onFinish={ (values) => updateCalculations({ transportation: values }) }
-                onFinishFailed={ (errorInfo) => console.error(errorInfo) }
-              >
-                { [
-                  { label: 'Plane', name: 'plane' },
-                  { label: 'Car', name: 'car' },
-                  { label: 'Bus', name: 'bus' },
-                ].map(({ label, name }) => (
-                  <Form.Item
-                    key={ name }
-                    label={ label }
-                    name={ name }
-                    rules={[{ required: true }]}
-                    initialValue={ 0 }
-                  >
-                    <InputNumber min={0} addonAfter={ 'miles/day' }/>
-                    {/* Nice to have: add a switcher for miles/km, provide context, and pass through to api as optional arg */}
-                  </Form.Item>
-                )) }
-
-                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                  <Button type="primary" htmlType="submit">
-                    Submit
-                  </Button>
+            <CalculationCard
+              name='transportation'
+              title='Transportation'
+              onSubmit={ (values) => updateCalculations({ transportation: values as Record<typeof transportationFields[number]['name'], number> })}
+            >
+              { transportationFields.map(({ label, name }) => (
+                <Form.Item
+                  key={ name }
+                  label={ label }
+                  name={ name }
+                  rules={[{ required: true }]}
+                  initialValue={ 0 }
+                >
+                  <InputNumber min={0} addonAfter={ 'miles/day' }/>
+                  {/* Nice to have: add a switcher for miles/km, provide context, and pass through to api as optional arg */}
                 </Form.Item>
-              </Form>
-            </Card>
+              )) }
+            </CalculationCard>
 
             {/* <Card title='extras' size='default'>
               <Button onClick={ () => updateCalculations({ food: { wrongKey: 5 } } as any) } type='ghost'>bad API call</Button>
@@ -145,7 +132,7 @@ const Home: NextPage = () => {
           </Space>
         </Footer>
       </Layout>
-      <Sidebar { ...{totalEmissions, calculations, resetCalculations: () => setCalculations({}) }}/>
+      <Sidebar { ...{ totalEmissions, calculations, resetCalculations: () => setCalculations({}) }}/>
     </Layout>
   )
 }

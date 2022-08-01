@@ -31,7 +31,8 @@ export const Sidebar: React.FC<ComponentProps> = ({ totalEmissions, calculations
       backgroundColor: 'lightgray'
     }}
   >
-    <div style={{ padding: 0, marginTop: '64px', backgroundColor: 'lightgreen'}} />
+    {/* TODO: export magic constant for this to keep in sync with header height */}
+    <div style={{ padding: 0, marginTop: '64px'}} />
 
     <Space direction='vertical' size='middle' style={{ margin: '0 12px', width: '276px' }}>
       <Card title='Emissions' size='default' extra={

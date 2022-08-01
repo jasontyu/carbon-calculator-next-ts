@@ -27,9 +27,9 @@ export const calculateFood = (data: Required<CalculateApi.RequestBody['calculati
   // Median GHG emissions (kg CO2eq / NU)
   // from aaq0216_datas2 (https://www.science.org/doi/10.1126/science.aaq0216)
   const factors: Record<keyof typeof data, number> = {
-    bread: 0.5,
-    meat: 30,
-    vegetables: 0.4
+    bread: 0.5 / 1000,
+    meat: 30 / 1000,
+    vegetables: 0.4 / 1000
   }
   const emissions = (Object.keys(data) as (keyof typeof data)[]) // TS loses type safety when iterating objects so we need to do this redundant looking cast
     .map(key => factors[key] * data[key])
