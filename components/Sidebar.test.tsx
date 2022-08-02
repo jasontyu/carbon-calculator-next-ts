@@ -65,12 +65,36 @@ describe('Sidebar', () => {
     items.forEach((item, index) => {
       const { getByText } = within(item)
       const calculationType = allCalculationTypes[index]
-      const expectedValue = props.calculations[calculationType]?.emissions.toString()
-      expect(expectedValue).not.toBeUndefined()
       expect(getByText(calculationType + ':')).toBeInTheDocument()
       expect(getByText('Not yet calculated')).toBeInTheDocument()
     })
   })
+
+  it('renders partial data correctly', () => {
+    props.calculations = {
+      food: { emissions: 100 },
+      transportation: { emissions: 0 }
+    }
+
+    render(<Sidebar {...props} />)
+
+    expect(screen.getByRole('heading')).toHaveTextContent('Total: 100')
+
+    const items = screen.getAllByRole('listitem')
+    expect(items).toHaveLength(allCalculationTypes.length)
+    items.forEach((item, index) => {
+      const { getByText } = within(item)
+      const calculationType = allCalculationTypes[index]
+      const expectedValue = props.calculations[calculationType]?.emissions
+      expect(expectedValue).not.toBeUndefined()
+      if (!expectedValue) {
+        expect(getByText('Not yet calculated')).toBeInTheDocument()
+      } else {
+        expect(getByText(expectedValue.toString())).toBeInTheDocument()
+      }
+    })
+  })
+
 
   it('Reset button calls resetCalculation on click', async () => {
     render(<Sidebar {...props} />)
