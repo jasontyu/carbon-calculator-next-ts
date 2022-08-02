@@ -10,20 +10,26 @@ type ComponentProps = {
 
 // TODO: write unit tests
 export const CalculationCard: React.FC<ComponentProps> = ({ name, title, children, onSubmit }) => {
-  return <Card title={title} style={{ width: '100%' }}>
-    <Form
-      name={name}
-      labelCol={{ span: 8 }}
-      wrapperCol={{ span: 16 }}
-      onFinish={ onSubmit }
-      onFinishFailed={ (errorInfo) => console.error(errorInfo) }
-    >
-      { children }
-      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
-  </Card>
+  const labelId = `CalculationCard-label-${name}`
+  return (
+    <Card title={ <label id={labelId}>{title}</label> } style={{ width: '100%' }}>
+      <Form
+        aria-labelledby={labelId}
+        name={name}
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 16 }}
+        onFinish={ onSubmit }
+        onFinishFailed={ (errorInfo) => console.error(errorInfo) }
+      >
+        <fieldset>
+          { children }
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+        </fieldset>
+      </Form>
+    </Card>
+  )
 }
