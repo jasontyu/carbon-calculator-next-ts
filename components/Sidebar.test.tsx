@@ -10,7 +10,6 @@ describe('Sidebar', () => {
   beforeEach(() => {
     resetCalculations = jest.fn()
     props = {
-      totalEmissions: 300,
       calculations: {
         food: { emissions: 100 },
         transportation: { emissions: 200 }
@@ -47,8 +46,13 @@ describe('Sidebar', () => {
     })
   })
 
+  it('renders total emissions correctly', () => {
+    render(<Sidebar {...props} />)
+
+    expect(screen.getByRole('heading')).toHaveTextContent('Total: 300')
+  })
+
   it('renders `Not yet calculated` if calculation is 0', () => {
-    props.totalEmissions = 0
     props.calculations = {
       food: { emissions: 0 },
       transportation: { emissions: 0 }

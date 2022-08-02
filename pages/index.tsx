@@ -15,12 +15,6 @@ type Calculations = CalculateApi.ResponseBody['calculation']
 // TODO: make sidebar responsive for mobile
 const Home: NextPage = () => {
   const [calculations, setCalculations] = useState<Calculations>({})
-
-  // todo: pull totalEmissions calculation into Sidebar
-  const totalEmissions = (Object.keys(calculations) as CalculationType[])
-    .map((ctype)=> calculations[ctype]?.emissions || 0)
-    .reduce((prev, next) => prev+next, 0)
-
   const updateCalculations = async (data: CalculateApi.RequestBody['calculations']) => {
     console.log('SENDING updateCalculations', data)
     try {
@@ -102,7 +96,7 @@ const Home: NextPage = () => {
           </Space>
         </Footer>
       </Layout>
-      <Sidebar { ...{ totalEmissions, calculations, resetCalculations: () => setCalculations({}) }}/>
+      <Sidebar calculations={calculations} resetCalculations={ () => setCalculations({}) }/>
     </Layout>
   )
 }
