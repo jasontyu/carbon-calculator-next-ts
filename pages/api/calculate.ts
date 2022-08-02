@@ -1,7 +1,7 @@
 import type { NextApiHandler } from 'next'
 import { z } from 'zod'
 import { calculate, CalculationInput, CalculationResult, prettifyResult } from '../../lib/services/EmissionsCalculator'
-import { withValidationHandled } from '../../lib/utils/middlewares'
+import { withValidationHandled } from '../../lib/middlewares'
 
 // TODO: write server tests with nock
 // OR setup e2e tests with cypress or playwright
