@@ -7,11 +7,14 @@ const { Sider } = Layout
 export const SIDEBAR_WIDTH = 300
 
 type ComponentProps = {
-  totalEmissions: number
   calculations: CalculateApi.ResponseBody['calculation']
   resetCalculations: () => void
 }
-export const Sidebar: React.FC<ComponentProps> = ({ totalEmissions, calculations, resetCalculations }) => {
+export const Sidebar: React.FC<ComponentProps> = ({ calculations, resetCalculations }) => {
+  const totalEmissions = (Object.keys(calculations) as (keyof typeof calculations)[])
+    .map((ctype)=> calculations[ctype]?.emissions || 0)
+    .reduce((prev, next) => prev+next, 0)
+
   return <Sider
     width={SIDEBAR_WIDTH}
     style={{
