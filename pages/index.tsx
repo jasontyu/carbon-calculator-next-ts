@@ -5,34 +5,12 @@ import { Typography, Layout, Space, BackTop, InputNumber, Form } from 'antd'
 import { CalculateApi, CalculationType } from './api/calculate'
 import { Sidebar, SIDEBAR_WIDTH } from '../components/Sidebar'
 import { CalculationCard } from '../components/CalculationCard'
+import * as api from '../lib/apiClient'
 
 const { Title, Text, Link } = Typography
 const { Header, Content, Footer } = Layout
 
 type Calculations = CalculateApi.ResponseBody['calculation']
-
-// TODO: move to separate file and unit tests
-// nice-to-have: consider extracting higher-order-function  createFetch<RequestBody, ResponseBody> (route: string): async (requestBody: RequestBody) => ResponseBody
-const fetchCalculation = async (requestBody: CalculateApi.RequestBody) => {
-  const response = await fetch('/api/calculate', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(requestBody),
-  })
-
-  if (!response.ok) {
-    console.error(response)
-    throw new Error(`Received unexpected ${response.status}`)
-  }
-
-  const result: CalculateApi.ResponseBody = await response.json()
-  console.log('RECEIVED /api/calculate', result)
-  return result
-}
-
-export const HEADER_HEIGHT = 84 // px
 
 // TODO: make sidebar responsive for mobile
 const Home: NextPage = () => {
@@ -46,7 +24,7 @@ const Home: NextPage = () => {
   const updateCalculations = async (data: CalculateApi.RequestBody['calculations']) => {
     console.log('SENDING updateCalculations', data)
     try {
-      const { calculation: newCalculations } = await fetchCalculation({
+      const { calculation: newCalculations } = await api.fetchCalculation({
         calculations: data
       })
       setCalculations({
@@ -74,7 +52,7 @@ const Home: NextPage = () => {
     <Layout hasSider>
       <BackTop />
       <Layout className="site-layout" style={{ marginRight: SIDEBAR_WIDTH }}>
-        <Header className="site-layout-background" style={{ padding: 24, height: HEADER_HEIGHT, backgroundColor: 'lightgreen'}}>
+        <Header className="site-layout-background" style={{ padding: 24, height: 84, backgroundColor: 'lightgreen'}}>
           <Title>Personal Carbon Footprint Calculator</Title>
         </Header>
         <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>

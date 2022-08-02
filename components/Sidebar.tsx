@@ -1,7 +1,6 @@
 import 'react'
 import { Space, Card, Button, Divider, Layout, Typography } from 'antd'
 import { CalculateApi, allCalculationTypes } from '../pages/api/calculate'
-import { HEADER_HEIGHT } from '../pages/index'
 const { Title, Text } = Typography
 const { Sider } = Layout
 
@@ -25,7 +24,7 @@ export const Sidebar: React.FC<ComponentProps> = ({ totalEmissions, calculations
       backgroundColor: 'lightgray'
     }}
   >
-    <div style={{ padding: 0, marginTop: `${HEADER_HEIGHT}px`}} />
+    <div style={{ padding: 0, marginTop: '64px'}} />
 
     <Space direction='vertical' size='middle' style={{ margin: '0 12px', width: '276px' }}>
       <Card title='Emissions' size='default' extra={
