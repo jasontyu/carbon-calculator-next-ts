@@ -31,7 +31,7 @@ Import trace for requested module:
 
 # Is there anything we can do about it?
 
-Moving the test into a `__tests__` folder as `jest` convention does not help. A suggestion to handle this case in NextJs core was submitted in 2017 and ultimately declined https://github.com/vercel/next.js/issues/1914
+Moving the test into a `pages/__tests__` folder as `jest` convention does not help. A suggestion to handle this case in NextJs core was submitted in 2017 and ultimately declined https://github.com/vercel/next.js/issues/1914
 
 The crowd suggestion is to configure some custom webpack overrides to ignore the underlying files based on the file regex. This would definitely work, but I don't think that's a good use of time for the purpose of this take-home challenge.
 

@@ -26,6 +26,7 @@ const Home: NextPage = () => {
         ...newCalculations
       })
     } catch (error) {
+      console.error(error)
       // form input was invalid
     }
   }

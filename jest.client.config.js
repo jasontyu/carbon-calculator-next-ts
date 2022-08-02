@@ -11,8 +11,7 @@ const createJestConfig = nextJest({
 const customJestConfig = {
   displayName: 'client',
   testMatch: [
-    "<rootDir>/components/*.test.{ts,tsx}",
-    "<rootDir>/__tests__/*.test.{ts,tsx}",
+    "<rootDir>/components/**/*.test.{ts,tsx}",
   ],
 
   setupFilesAfterEnv: ['<rootDir>/jest.client.setup.js'],

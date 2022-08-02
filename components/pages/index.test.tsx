@@ -1,10 +1,9 @@
 import { screen, render, within, waitFor } from '@testing-library/react'
-
 import userEvent from '@testing-library/user-event'
-import { allCalculationTypes, CalculateApi, CalculationType } from '../pages/api/calculate'
 import nock from 'nock'
-import HomePage from '../pages/index'
 
+import HomePage from '../../pages/index'
+import { allCalculationTypes, CalculationType } from '../../pages/api/calculate'
 
 describe('HomePage', () => {
   // Consider extracting header and footer into components
@@ -46,22 +45,52 @@ describe('HomePage', () => {
 
   // Since we're testing at the page-level,
   // we also get to do integration-level tests (across components)
-  describe.skip('integration tests', () => {
+  // To gain even more confidence, consider moving this suite to an E2E test framework like Cypress to avoid API mocking
+  describe('integration tests', () => {
 
-    // TODO: mock API call
+    let scope: nock.Scope
+    beforeEach(() => {
+      scope = nock('http://localhost')
+    })
+    afterEach(() => {
+      nock.cleanAll()
+    })
 
-    it.skip('when submitting a calculation, should update emissions sidebar', async () => {
+    it('should submit calculations, update emissions sidebar, and reset', async () => {
       render(<HomePage />)
+
+      scope
+        .post('/api/calculate', { calculations: { food: { meat: 4200, vegetables: 0, bread: 0 } } })
+        .reply(200, {
+          calculation: {
+            food: { emissions: 100 }
+          }
+        })
+        .post('/api/calculate', { calculations: { transportation: { bus: 1, car: 2, plane: 3 } } })
+        .reply(200, {
+          calculation: {
+            transportation: { emissions: 200 }
+          }
+        })
 
       await userEvent.type(screen.getByRole('spinbutton', { name: /meat/i }), '4200')
       await userEvent.click(
         within(screen.getByRole('form', { name: /food/i }))
           .getByRole('button', { name: /submit/i })
       )
+      await waitFor(() => expect(screen.getByRole('heading', { name: /total/i })).toHaveTextContent('Total: 100'))
 
-      expect(screen.getByRole('heading', { name: /total/i })).toHaveTextContent('Total: 42')
+      await userEvent.type(screen.getByRole('spinbutton', { name: /bus/i }), '1')
+      await userEvent.type(screen.getByRole('spinbutton', { name: /car/i }), '2')
+      await userEvent.type(screen.getByRole('spinbutton', { name: /plane/i }), '3')
+      await userEvent.click(
+        within(screen.getByRole('form', { name: /transportation/i }))
+          .getByRole('button', { name: /submit/i })
+      )
+      await waitFor(() => expect(screen.getByRole('heading', { name: /total/i })).toHaveTextContent('Total: 300'))
 
+      await userEvent.click(screen.getByRole('button', { name: /reset/i }))
+      await waitFor(() => expect(screen.getByRole('heading', { name: /total/i })).toHaveTextContent('Total: 0'))
     })
-    it.todo('when clicking reset, should reset emissions sidebar')
   })
 })
