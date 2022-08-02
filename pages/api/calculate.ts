@@ -3,9 +3,6 @@ import { z } from 'zod'
 import { calculate, CalculationInput, CalculationResult, prettifyResult } from '../../lib/services/EmissionsCalculator'
 import { withValidationHandled } from '../../lib/middlewares'
 
-// TODO: write server tests with nock
-// OR setup e2e tests with cypress or playwright
-
 export namespace CalculateApi {
   export type RequestBody = z.infer<typeof CalculateRequestBodySchema> // Zod TS magic
   export type ResponseBody = { calculation: Partial<Record<CalculationType, CalculationResult>> }
