@@ -1,4 +1,3 @@
-import 'jest'
 import * as EmissionsCalculator from './EmissionsCalculator'
 
 describe('EmissionsCalculator', () => {

@@ -45,7 +45,6 @@ export const calculateTransportation = (data: Required<CalculateApi.RequestBody[
   // CO2 Factor (kg CO2 / vehicle-mile)
   // from Emission Factors for Greenhouse Gas Inventories
   // Table 10: Scope 3 Category 6: Business Travel and Category 7: Employee Commuting
-  // TODO: include CH4 and N2O factors in terms of kg CO2eq
   const factors: Record<keyof typeof data, number> = {
     plane: 0.133, // Air Travel, medium-haul (passenger-mile)
     car: 0.335, // Passenger Car
