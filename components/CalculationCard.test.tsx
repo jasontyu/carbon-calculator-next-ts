@@ -1,5 +1,5 @@
 import React from 'react'
-import { screen, render, within } from '@testing-library/react'
+import { screen, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { CalculationCard } from './CalculationCard'
 import { Form, InputNumber } from 'antd'
@@ -20,7 +20,7 @@ describe('CalculationCard', () => {
   it('should render title and children correctly', () => {
     render(<CalculationCard {...props}></CalculationCard>)
 
-    expect(screen.getByText('Food')).toHaveClass('ant-card-head-title')
+    expect(screen.getByRole('form', { name: 'Food' })).toBeInTheDocument()
     expect(screen.getByLabelText('bread')).toBeInTheDocument()
   })
 

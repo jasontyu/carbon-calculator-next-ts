@@ -1,17 +1,10 @@
 import 'react'
 import { Space, Card, Button, Divider, Layout, Typography } from 'antd'
-import { CalculateApi, CalculationType } from '../pages/api/calculate'
+import { CalculateApi, allCalculationTypes } from '../pages/api/calculate'
 const { Title, Text } = Typography
 const { Sider } = Layout
 
 export const SIDEBAR_WIDTH = 300
-
-// TODO: find a better home for this value
-const allCalculationTypes: CalculationType[]  = [
-  'food',
-  'transportation'
-]
-
 
 type ComponentProps = {
   totalEmissions: number

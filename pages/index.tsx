@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import React, { useState } from 'react'
 
-import { Typography, Layout, Space, Card, BackTop, InputNumber, Form, Button } from 'antd'
+import { Typography, Layout, Space, BackTop, InputNumber, Form } from 'antd'
 import { CalculateApi, CalculationType } from './api/calculate'
 import { Sidebar, SIDEBAR_WIDTH } from '../components/Sidebar'
 import { CalculationCard } from '../components/CalculationCard'
@@ -10,8 +10,6 @@ const { Title, Text, Link } = Typography
 const { Header, Content, Footer } = Layout
 
 type Calculations = CalculateApi.ResponseBody['calculation']
-
-
 
 // TODO: move to separate file and unit tests
 // nice-to-have: consider extracting higher-order-function  createFetch<RequestBody, ResponseBody> (route: string): async (requestBody: RequestBody) => ResponseBody
@@ -83,7 +81,7 @@ const Home: NextPage = () => {
             <CalculationCard
               name='food'
               title='Food'
-              onSubmit={ (values ) => updateCalculations({ food: values as Record<typeof foodFields[number]['name'], number> })}
+              onSubmit={ (values) => updateCalculations({ food: values as Record<typeof foodFields[number]['name'], number> })}
             >
               { foodFields.map(({ label, name }) => (
                 <Form.Item

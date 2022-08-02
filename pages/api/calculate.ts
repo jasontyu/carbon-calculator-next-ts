@@ -11,6 +11,10 @@ export namespace CalculateApi {
   export type ResponseBody = { calculation: Partial<Record<CalculationType, CalculationResult>> }
 }
 export type CalculationType = keyof CalculateApi.RequestBody['calculations']
+export const allCalculationTypes: CalculationType[] = [
+  'food',
+  'transportation'
+]
 
 // Zod enables validation and internal types to use same source of truth
 const CalculateRequestBodySchema = z

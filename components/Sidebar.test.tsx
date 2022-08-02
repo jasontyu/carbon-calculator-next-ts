@@ -1,7 +1,8 @@
 import { screen, render, within } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+
 import { Sidebar } from './Sidebar'
 
-import userEvent from '@testing-library/user-event'
 
 describe('Sidebar', () => {
   let props: React.ComponentProps<typeof Sidebar>

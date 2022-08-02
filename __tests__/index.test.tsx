@@ -40,7 +40,7 @@ describe('HomePage', () => {
 
   it('should render emissions sidebar', () => {
     render(<HomePage />)
-    expect(screen.getByRole('heading', { name: /total/ })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /total/i })).toBeInTheDocument()
   })
 
   // Since we're testing at the page-level,
