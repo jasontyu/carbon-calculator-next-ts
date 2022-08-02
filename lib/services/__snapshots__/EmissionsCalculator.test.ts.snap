@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EmissionsCalculator \`calculate\` calls through to helper and matches snapshot for type 'food' 1`] = `
+Object {
+  "emissions": 6.17,
+}
+`;
+
+exports[`EmissionsCalculator \`calculate\` calls through to helper and matches snapshot for type 'transportation' 1`] = `
+Object {
+  "emissions": 112.2,
+}
+`;

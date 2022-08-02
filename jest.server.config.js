@@ -12,8 +12,7 @@ const customJestConfig = {
   displayName: 'server',
   testMatch: [
     "<rootDir>/pages/api/**/*.test.{ts,tsx}",
-    "<rootDir>/services/*.test.{ts,tsx}",
-    "<rootDir>/utils/*.test.{ts,tsx}",
+    "<rootDir>/lib/**/*.test.{ts,tsx}",
     // add more folders as necessary
   ],
   testPathIgnorePatterns: [

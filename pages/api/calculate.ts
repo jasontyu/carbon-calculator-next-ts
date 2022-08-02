@@ -1,7 +1,7 @@
 import type { NextApiHandler } from 'next'
 import { z } from 'zod'
-import { calculate, CalculationResult } from '../../services/EmissionsCalculator'
-import { withValidationHandled } from '../../utils/middlewares'
+import { calculate, CalculationInput, CalculationResult, prettifyResult } from '../../lib/services/EmissionsCalculator'
+import { withValidationHandled } from '../../lib/middlewares'
 
 // TODO: write server tests with nock
 // OR setup e2e tests with cypress or playwright
@@ -11,16 +11,24 @@ export namespace CalculateApi {
   export type ResponseBody = { calculation: Partial<Record<CalculationType, CalculationResult>> }
 }
 export type CalculationType = keyof CalculateApi.RequestBody['calculations']
+export const allCalculationTypes: CalculationType[] = [
+  'food',
+  'transportation'
+]
 
 // Zod enables validation and internal types to use same source of truth
 const CalculateRequestBodySchema = z
-  .object({ 
-    calculations: z.object({ 
+  .object({
+    calculations: z.object({
       transportation: z.object({
-        miles: z.number()
+        bus: z.number(),
+        car: z.number(),
+        plane: z.number()
       }),
       food: z.object({
-        calories: z.number()
+        bread: z.number(),
+        meat: z.number(),
+        vegetables: z.number()
       })
     }).partial() // all calculation types are optional
   })
@@ -40,15 +48,24 @@ const handler: NextApiHandler<CalculateApi.ResponseBody> = (req, res) => {
     case 'POST': {
       const { calculations } = CalculateRequestBodySchema.parse(req.body) // throws ZodError, which is caught by withValidationHandled
 
-      const calculationTypes = Object.keys(calculations) as CalculationType[]
-      const results = calculationTypes
-        .map((ctype) => ( { ctype, result: calculate(ctype, calculations[ctype]) } ))
+      const results = Object.entries(calculations)
+        // transform to list of differentiated type
+        .map(([ctype, data]) => ({ ctype, ...data }) as CalculationInput) // TS loses type safety when iterating objects, so we need to recast
+        // calculate results using type-safe generic calculate function
+        .map((calculationInput) => ({ ctype: calculationInput.ctype, result: calculate(calculationInput) }))
+        // transform back to key-value form for output
         .reduce((acc, { ctype, result }) => {
-          acc[ctype] = result
+          acc[ctype] = prettifyResult(result)
           return acc
         }, {} as Partial<Record<CalculationType, CalculationResult>>)
 
-      return res.status(200).json({ calculation: results })
+
+      const responseBody = { calculation: results }
+
+      // Hack: mimic access log
+      console.log('200 POST /api/calculate', calculations, ' -> ', responseBody)
+
+      return res.status(200).json(responseBody)
     }
     default:
       res.setHeader('Allow', ['POST'])
