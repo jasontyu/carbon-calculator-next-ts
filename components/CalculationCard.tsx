@@ -8,7 +8,6 @@ type ComponentProps = {
   onSubmit: (values: unknown) => void
 }
 
-// TODO: write unit tests
 export const CalculationCard: React.FC<ComponentProps> = ({ name, title, children, onSubmit }) => {
   const labelId = `CalculationCard-label-${name}`
   return (
@@ -21,14 +20,12 @@ export const CalculationCard: React.FC<ComponentProps> = ({ name, title, childre
         onFinish={ onSubmit }
         onFinishFailed={ (errorInfo) => console.error(errorInfo) }
       >
-        <fieldset>
-          { children }
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </fieldset>
+        { children }
+        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
       </Form>
     </Card>
   )

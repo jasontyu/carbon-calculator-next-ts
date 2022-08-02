@@ -32,6 +32,8 @@ const fetchCalculation = async (requestBody: CalculateApi.RequestBody) => {
   return result
 }
 
+export const HEADER_HEIGHT = 84 // px
+
 // TODO: make sidebar responsive for mobile
 const Home: NextPage = () => {
   const [calculations, setCalculations] = useState<Calculations>({})
@@ -54,7 +56,6 @@ const Home: NextPage = () => {
     } catch (error) {
       // form input was invalid
     }
-
   }
 
   const foodFields = [
@@ -73,7 +74,7 @@ const Home: NextPage = () => {
     <Layout hasSider>
       <BackTop />
       <Layout className="site-layout" style={{ marginRight: SIDEBAR_WIDTH }}>
-        <Header className="site-layout-background" style={{ padding: 24, height: 84, backgroundColor: 'lightgreen'}}>
+        <Header className="site-layout-background" style={{ padding: 24, height: HEADER_HEIGHT, backgroundColor: 'lightgreen'}}>
           <Title>Personal Carbon Footprint Calculator</Title>
         </Header>
         <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
@@ -92,7 +93,6 @@ const Home: NextPage = () => {
                   initialValue={ 0 }
                 >
                   <InputNumber min={0} addonAfter={ 'calories/day' }/>
-                  {/* Nice to have: render % to help fiddle with numbers */}
                 </Form.Item>
               )) }
             </CalculationCard>
@@ -111,15 +111,9 @@ const Home: NextPage = () => {
                   initialValue={ 0 }
                 >
                   <InputNumber min={0} addonAfter={ 'miles/day' }/>
-                  {/* Nice to have: add a switcher for miles/km, provide context, and pass through to api as optional arg */}
                 </Form.Item>
               )) }
             </CalculationCard>
-
-            {/* <Card title='extras' size='default'>
-              <Button onClick={ () => updateCalculations({ food: { wrongKey: 5 } } as any) } type='ghost'>bad API call</Button>
-            </Card> */}
-
           </Space>
         </Content>
         <Footer style={{ textAlign: 'center' }}>

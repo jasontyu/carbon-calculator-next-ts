@@ -2,7 +2,7 @@ import { screen, render, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import { Sidebar } from './Sidebar'
-
+import { allCalculationTypes } from '../pages/api/calculate'
 
 describe('Sidebar', () => {
   let props: React.ComponentProps<typeof Sidebar>
@@ -22,7 +22,6 @@ describe('Sidebar', () => {
     jest.resetAllMocks()
   })
 
-  const orderedKeys = [ 'food', 'transportation' ] as (keyof typeof props.calculations)[]
 
   it('renders static elements', () => {
     render(<Sidebar {...props} />)
@@ -37,10 +36,10 @@ describe('Sidebar', () => {
     render(<Sidebar {...props} />)
 
     const items = screen.getAllByRole('listitem')
-    expect(items).toHaveLength(orderedKeys.length)
+    expect(items).toHaveLength(allCalculationTypes.length)
     items.forEach((item, index) => {
       const { getByText } = within(item)
-      const calculationType = orderedKeys[index]
+      const calculationType = allCalculationTypes[index]
       const expectedValue = props.calculations[calculationType]?.emissions.toString()
       expect(expectedValue).not.toBeUndefined()
       expect(getByText(calculationType + ':')).toBeInTheDocument()
@@ -58,10 +57,10 @@ describe('Sidebar', () => {
     render(<Sidebar {...props} />)
 
     const items = screen.getAllByRole('listitem')
-    expect(items).toHaveLength(orderedKeys.length)
+    expect(items).toHaveLength(allCalculationTypes.length)
     items.forEach((item, index) => {
       const { getByText } = within(item)
-      const calculationType = orderedKeys[index]
+      const calculationType = allCalculationTypes[index]
       const expectedValue = props.calculations[calculationType]?.emissions.toString()
       expect(expectedValue).not.toBeUndefined()
       expect(getByText(calculationType + ':')).toBeInTheDocument()

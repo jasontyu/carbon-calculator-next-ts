@@ -28,14 +28,15 @@ describe('HomePage', () => {
       food: 'Food',
       transportation: 'Transportation'
     }
-    // ensure this test is updated when allCalculationTypes is updated
-    expect(Object.values(formLabels)).toHaveLength(allCalculationTypes.length)
-    Object.keys(formLabels).forEach(ctype => expect(allCalculationTypes.includes(ctype as CalculationType)))
 
     const mainContent = screen.getByRole('main')
     Object.values(formLabels).forEach(label => {
       expect(within(mainContent).getByRole('form', { name: label })).toBeInTheDocument()
     })
+
+    // additional assertions to ensure this test is updated when allCalculationTypes is updated
+    expect(Object.values(formLabels)).toHaveLength(allCalculationTypes.length)
+    Object.keys(formLabels).forEach(ctype => expect(allCalculationTypes.includes(ctype as CalculationType)))
   })
 
   it('should render emissions sidebar', () => {

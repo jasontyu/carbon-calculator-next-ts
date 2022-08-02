@@ -1,8 +1,10 @@
 import React from 'react'
 import { screen, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { CalculationCard } from './CalculationCard'
+
 import { Form, InputNumber } from 'antd'
+import { CalculationCard } from './CalculationCard'
+
 
 describe('CalculationCard', () => {
   let props: React.ComponentProps<typeof CalculationCard>

@@ -24,6 +24,7 @@ describe('middlewares', () => {
 
       expect(res.statusCode).toBe(400)
     })
+
     it('should re-throw other errors', async () => {
       const { req, res } = mockRequestResponse({ throwError: true })
       expect.assertions(1) // fail if no assertion
@@ -33,6 +34,7 @@ describe('middlewares', () => {
         expect(e).toEqual('generic error')
       }
     })
+
     it('should pass if no error', async () => {
       const { req, res } = mockRequestResponse({ throwError: false })
       await handler(req, res)
