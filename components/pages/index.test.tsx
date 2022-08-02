@@ -1,9 +1,8 @@
-import { screen, render, within, waitFor } from '@testing-library/react'
+import { screen, render, within } from '@testing-library/react'
 
 import userEvent from '@testing-library/user-event'
-import { allCalculationTypes, CalculateApi, CalculationType } from '../pages/api/calculate'
-import nock from 'nock'
-import HomePage from '../pages/index'
+import { allCalculationTypes, CalculationType } from '../../pages/api/calculate'
+import HomePage from '../../pages/index'
 
 
 describe('HomePage', () => {
