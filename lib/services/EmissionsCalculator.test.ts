@@ -1,64 +1,41 @@
 import 'jest'
-import { CalculationType } from '../../pages/api/calculate'
-
 import * as EmissionsCalculator from './EmissionsCalculator'
 
 describe('EmissionsCalculator', () => {
-  let calculateFood: jest.SpyInstance
-  let calculateTransportation: jest.SpyInstance
-  beforeEach(() => {
-    calculateFood = jest.spyOn(EmissionsCalculator, 'calculateFood')
-    calculateTransportation = jest.spyOn(EmissionsCalculator, 'calculateTransportation')
-  })
-  afterEach(() => {
-    jest.restoreAllMocks()
-  })
 
-  describe('calculate calls through to helper correctly', () => {
-    type TestCase = { type: CalculationType, input: unknown, spy: keyof typeof EmissionsCalculator }
+  describe('`calculate` calls through to helper and matches snapshot', () => {
+    type TestCase = { input: EmissionsCalculator.CalculationInput, helper: keyof typeof EmissionsCalculator }
     const cases: TestCase[] = [
-      { type: 'food', input: 42, spy: 'calculateFood' },
-      { type: 'transportation', input: 42, spy: 'calculateTransportation' },
+      { input: { ctype: 'food', bread: 100, meat: 200, vegetables: 300 }, helper: 'calculateFood' },
+      { input: { ctype: 'transportation', bus: 100, car: 200, plane: 300 }, helper: 'calculateTransportation' },
     ]
 
     // This is the more intuitive approach, but it doesn't work
     // because the mapping in `EmissionsCalculator.calculate` does not get spied on properly
-    // Note that these tests are skipped to avoid failing
-    const itShouldCallThroughCorrectly = (testCase: TestCase) => {
-        const { type, input, spy } = testCase
-        it.skip(`for type '${type}'`, () => {
-          const spyInstance = jest.spyOn(EmissionsCalculator, spy)
-          EmissionsCalculator.calculate(input)
-          expect(spyInstance).toHaveBeenCalledWith(input)
-      })
-    }
-    cases.forEach(testCase => itShouldCallThroughCorrectly(testCase))
+    // const itShouldCallThroughCorrectly = (testCase: TestCase) => {
+    //     const { input, spy } = testCase
+    //     it(`for type '${input.ctype}'`, () => {
+    //     const { ctype, ...data } = input
+    //       const spyInstance = jest.spyOn(EmissionsCalculator, spy)
+    //       EmissionsCalculator.calculate(input)
+    //       expect(spyInstance).toHaveBeenCalledWith(data)
+    //   })
+    // }
+    // cases.forEach(testCase => itShouldCallThroughCorrectly(testCase))
 
     // So instead, we use a slightly hackier way to assert that it calls through correctly
-    const itShouldReturnSameValue = (testCase: TestCase) => {
-      const { type, input, spy } = testCase
-        it(`for type '${type}'`, () => {
-          const result1 = EmissionsCalculator.calculate(input)
-          const result2 = (EmissionsCalculator[spy] as any).apply(input)
-          expect(result1).toStrictEqual(result2)
+    const itShouldCallThroughAndMatchSnapshot = (testCase: TestCase) => {
+      const { input, helper } = testCase
+      it(`for type '${input.ctype}'`, () => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { ctype, ...data } = input
+        const result1 = EmissionsCalculator.calculate(input)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const result2 = (EmissionsCalculator[helper] as any)(data)
+        expect(result1).toStrictEqual(result2)
+        expect(result1).toMatchSnapshot()
       })
     }
-    cases.forEach(testCase => itShouldReturnSameValue(testCase))
-  })
-
-  describe('calculateFood', () => {
-    it('should return 9999', () => {
-      const result = EmissionsCalculator.calculateFood(0)
-      expect(result).toStrictEqual({ emissions: 9999 })
-      expect(calculateFood).toHaveBeenCalled()
-    })
-  })
-
-  describe('calculateTransportation', () => {
-    it('should return 42', () => {
-      const result = EmissionsCalculator.calculateTransportation(0)
-      expect(result).toStrictEqual({ emissions: 42 })
-      expect(calculateTransportation).toHaveBeenCalled()
-    })
+    cases.forEach(testCase => itShouldCallThroughAndMatchSnapshot(testCase))
   })
 })

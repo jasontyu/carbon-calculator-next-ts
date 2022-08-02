@@ -1,3 +1,6 @@
+// to unwrap ctype from input without using them
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { CalculateApi } from "../../pages/api/calculate"
 
 export type CalculationResult = {
