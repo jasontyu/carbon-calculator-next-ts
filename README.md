@@ -1,5 +1,3 @@
-# carbon-calculator-next-ts
-
 ## Overview
 This application renders a form and exposes an API calculation according to the specification of the [SINAI Fullstack Engineer Take-home Challenge](https://www.notion.so/sinaitechnologies/Fullstack-Engineer-Take-home-Challenge-a06771fbb9134092adea6c7b729a35ea)
 
