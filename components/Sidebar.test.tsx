@@ -31,31 +31,10 @@ describe('Sidebar', () => {
     expect(screen.getByRole('button', { name: /reset/i }))
   })
 
-  it('renders nonzero emissions correctly', () => {
-    render(<Sidebar {...props} />)
-
-    const items = screen.getAllByRole('listitem')
-    expect(items).toHaveLength(allCalculationTypes.length)
-    items.forEach((item, index) => {
-      const { getByText } = within(item)
-      const calculationType = allCalculationTypes[index]
-      const expectedValue = props.calculations[calculationType]?.emissions.toString()
-      expect(expectedValue).not.toBeUndefined()
-      expect(getByText(calculationType + ':')).toBeInTheDocument()
-      expect(getByText(expectedValue as string)).toBeInTheDocument()
-    })
-  })
-
-  it('renders total emissions correctly', () => {
-    render(<Sidebar {...props} />)
-
-    expect(screen.getByRole('heading')).toHaveTextContent('Total: 300')
-  })
-
-  it('renders `Not yet calculated` if calculation is 0', () => {
+  it('renders undefined emissions as `Not yet calculated`', () => {
     props.calculations = {
-      food: { emissions: 0 },
-      transportation: { emissions: 0 }
+      food: undefined,
+      transportation: undefined
     }
 
     render(<Sidebar {...props} />)
@@ -70,15 +49,27 @@ describe('Sidebar', () => {
     })
   })
 
-  it('renders partial data correctly', () => {
+  it('renders zero emissions as zeros with 2 decimal places', () => {
     props.calculations = {
-      food: { emissions: 100 },
+      food: { emissions: 0 },
       transportation: { emissions: 0 }
     }
 
     render(<Sidebar {...props} />)
 
-    expect(screen.getByRole('heading')).toHaveTextContent('Total: 100')
+    const items = screen.getAllByRole('listitem')
+    expect(items).toHaveLength(allCalculationTypes.length)
+    items.forEach((item, index) => {
+      const { getByText } = within(item)
+      const calculationType = allCalculationTypes[index]
+      expect(getByText(calculationType + ':')).toBeInTheDocument()
+      const zero = 0
+      expect(getByText(zero.toFixed(2))).toBeInTheDocument()
+    })
+  })
+
+  it('renders nonzero emissions with 2 decimal places', () => {
+    render(<Sidebar {...props} />)
 
     const items = screen.getAllByRole('listitem')
     expect(items).toHaveLength(allCalculationTypes.length)
@@ -87,14 +78,40 @@ describe('Sidebar', () => {
       const calculationType = allCalculationTypes[index]
       const expectedValue = props.calculations[calculationType]?.emissions
       expect(expectedValue).not.toBeUndefined()
-      if (!expectedValue) {
-        expect(getByText('Not yet calculated')).toBeInTheDocument()
-      } else {
-        expect(getByText(expectedValue.toString())).toBeInTheDocument()
-      }
+      expect(getByText(calculationType + ':')).toBeInTheDocument()
+      expect(getByText((expectedValue as number).toFixed(2))).toBeInTheDocument()
     })
   })
 
+  it('renders total emissions correctly', () => {
+    render(<Sidebar {...props} />)
+
+    expect(screen.getByRole('heading')).toHaveTextContent('Total: 300.00')
+  })
+
+  it('renders partial data correctly', () => {
+    props.calculations = {
+      food: { emissions: 100 },
+      transportation: undefined
+    }
+
+    render(<Sidebar {...props} />)
+
+    expect(screen.getByRole('heading')).toHaveTextContent('Total: 100.00')
+
+    const items = screen.getAllByRole('listitem')
+    expect(items).toHaveLength(allCalculationTypes.length)
+    items.forEach((item, index) => {
+      const { getByText } = within(item)
+      const calculationType = allCalculationTypes[index]
+      const expectedValue = props.calculations[calculationType]?.emissions
+      if (!expectedValue) {
+        expect(getByText('Not yet calculated')).toBeInTheDocument()
+      } else {
+        expect(getByText(expectedValue.toFixed(2))).toBeInTheDocument()
+      }
+    })
+  })
 
   it('Reset button calls resetCalculation on click', async () => {
     render(<Sidebar {...props} />)

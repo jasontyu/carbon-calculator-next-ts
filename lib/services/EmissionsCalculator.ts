@@ -56,5 +56,3 @@ export const calculateTransportation = (data: Required<CalculateApi.RequestBody[
 
   return { emissions }
 }
-
-export const prettifyResult = (result: CalculationResult): CalculationResult => ({ emissions: Math.round(result.emissions) })

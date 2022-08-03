@@ -15,6 +15,12 @@ export const Sidebar: React.FC<ComponentProps> = ({ calculations, resetCalculati
     .map((ctype)=> calculations[ctype]?.emissions || 0)
     .reduce((prev, next) => prev+next, 0)
 
+  const renderEmissions = (emissions: number | undefined, decimalPlaces=2) => (
+    emissions !== undefined
+      ? emissions.toFixed(decimalPlaces)
+      : 'Not yet calculated'
+  )
+
   return <Sider
     width={SIDEBAR_WIDTH}
     style={{
@@ -33,11 +39,11 @@ export const Sidebar: React.FC<ComponentProps> = ({ calculations, resetCalculati
       <Card title='Emissions' size='default' extra={
         <Button onClick={ resetCalculations } type='ghost' >Reset</Button>
       }>
-        <Title level={2}>Total: { totalEmissions }</Title>
+        <Title level={2}>Total: { renderEmissions(totalEmissions) }</Title>
         { allCalculationTypes.map(ctype => (
           <li key={ctype}>
             <Text strong>{ctype}: </Text>
-            <Text>{calculations[ctype]?.emissions || 'Not yet calculated' }</Text>
+            <Text>{ renderEmissions(calculations[ctype]?.emissions) }</Text>
           </li>
         ))}
         <Divider />

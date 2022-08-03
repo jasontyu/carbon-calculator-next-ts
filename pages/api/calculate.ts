@@ -1,6 +1,6 @@
 import type { NextApiHandler } from 'next'
 import { z } from 'zod'
-import { calculate, CalculationInput, CalculationResult, prettifyResult } from '../../lib/services/EmissionsCalculator'
+import { calculate, CalculationInput, CalculationResult } from '../../lib/services/EmissionsCalculator'
 import { withValidationHandled } from '../../lib/middlewares'
 
 // TODO: write server tests with nock
@@ -55,7 +55,7 @@ const handler: NextApiHandler<CalculateApi.ResponseBody> = (req, res) => {
         .map((calculationInput) => ({ ctype: calculationInput.ctype, result: calculate(calculationInput) }))
         // transform back to key-value form for output
         .reduce((acc, { ctype, result }) => {
-          acc[ctype] = prettifyResult(result)
+          acc[ctype] = result
           return acc
         }, {} as Partial<Record<CalculationType, CalculationResult>>)
 
