@@ -1,10 +1,10 @@
-import 'react'
+import React from 'react'
 import { Card, Button, Form } from 'antd'
 
 type ComponentProps = {
   name: string
   title: React.ReactNode
-  children: React.ReactNode
+  children: React.ReactNode // fields.map(field => <Form.Item ... />)
   onSubmit: (values: unknown) => void
 }
 
