@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import React, { useState } from 'react'
 
 import { Typography, Layout, Space, BackTop, InputNumber, Form } from 'antd'
-import { CalculateApi, CalculationType } from './api/calculate'
+import { CalculateApi } from './api/calculate'
 import { Sidebar, SIDEBAR_WIDTH } from '../components/Sidebar'
 import { CalculationCard } from '../components/CalculationCard'
 import * as api from '../lib/apiClient'
@@ -12,7 +12,6 @@ const { Header, Content, Footer } = Layout
 
 type Calculations = CalculateApi.ResponseBody['calculation']
 
-// TODO: make sidebar responsive for mobile
 const Home: NextPage = () => {
   const [calculations, setCalculations] = useState<Calculations>({})
   const updateCalculations = async (data: CalculateApi.RequestBody['calculations']) => {
