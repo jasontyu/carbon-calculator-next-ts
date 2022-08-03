@@ -32,12 +32,14 @@ Build a full-stack personal carbon footprint calculator:
   - `yarn test-client`
   - `yarn test-server`
 
-## Deployment
+### Workflows
+* `main` branch is protected - must contribute via Pull Request (PR)
+* CI checks (build lint and tests) are configured via GitHub workflow to run on PR and block merge if failing
 
+### Deployment
 This app is deployed using use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js. 
 - non-main branches are auto-built and deployed as preview sites. There can be up to 5 at once
 - main branch is auto-rebuilt and deployed to main site [`carbon-calculator-next-ts.vercel.app`](carbon-calculator-next-ts.vercel.app)
-
 
 Check out [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
@@ -55,17 +57,14 @@ The code is structured according to NextJS convention, with the `pages` folder i
 See [design doc](https://docs.google.com/document/d/1CXUhj5IibDofY0_00KOctsTjEd2b2JSCzZKFSt3eIKg/edit) for an in-depth breakdown.
 
 ### Lint configuration
-
 By default, the lint command (which uses `next lint` under the hood) only includes `components, lib, pages` folders. For simplicity, all code is organized within this limited structure.
 
 See `.eslintrc.json` for additional configuration.
 
 ### Test configuration
-
 Test coverage and jest options are defined under
 * `jest.client.config.js`
 * `jest.server.config.js`
 
 Test environment setup (run before tests) is defined under
 * `jest.client.setup.js`
-
