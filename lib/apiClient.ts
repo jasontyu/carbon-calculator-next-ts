@@ -1,4 +1,4 @@
-import { CalculateApi } from "../pages/api/calculate"
+import { CalculateApi } from '../pages/api/calculate'
 import axios from 'axios'
 
 export const fetchCalculation = async (requestBody: CalculateApi.RequestBody) => {

@@ -22,7 +22,7 @@ export const CalculationCard: React.FC<ComponentProps> = ({ name, title, childre
       >
         { children }
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit">
+          <Button type='primary' htmlType='submit'>
             Submit
           </Button>
         </Form.Item>

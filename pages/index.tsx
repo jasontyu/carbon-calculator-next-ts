@@ -45,8 +45,8 @@ const Home: NextPage = () => {
   return (
     <Layout hasSider>
       <BackTop />
-      <Layout className="site-layout" style={{ marginRight: SIDEBAR_WIDTH }}>
-        <Header className="site-layout-background" style={{ padding: 24, height: 84, backgroundColor: 'lightgreen'}}>
+      <Layout style={{ marginRight: SIDEBAR_WIDTH }}>
+        <Header style={{ padding: 24, height: 84, backgroundColor: 'lightgreen'}}>
           <Title>Personal Carbon Footprint Calculator</Title>
         </Header>
         <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
