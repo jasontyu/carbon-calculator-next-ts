@@ -22,13 +22,11 @@ describe('Sidebar', () => {
   })
 
 
-  it('renders static elements', () => {
+  it('renders expected static text', () => {
     render(<Sidebar {...props} />)
 
     expect(screen.getByText('Emissions')).toBeInTheDocument()
-    expect(screen.getAllByRole('listitem')).toHaveLength(2)
     expect(screen.getByText('kg CO2eq / day')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /reset/i }))
   })
 
   it('renders undefined emissions as `Not yet calculated`', () => {
