@@ -20,9 +20,10 @@ Build a full-stack personal carbon footprint calculator:
 
 ## Development
 
-First, run `yarn` to install packages locally.
-
-Run `yarn dev` to run the development server and open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Getting started
+1. `nvm use` to set Node version based on `.nvmrc`
+1. `yarn` to install packages locally.
+1. Run `yarn dev` to run the development server and open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ### Commands
 - `yarn lint`
