@@ -1,15 +1,17 @@
 // to unwrap ctype from input without using them
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { CalculateApi } from "../../pages/api/calculate"
+import { CalculateApi } from '../../pages/api/calculate'
 
 export type CalculationResult = {
   emissions: number
 }
 
 // Intermediary type with type discrimination allows mapping of generic calculate to strongly typed helpers
-export type CalculationInput = { ctype: 'food' } & CalculateApi.RequestBody['calculations']['food']
+export type CalculationInput = (
+  { ctype: 'food' } & CalculateApi.RequestBody['calculations']['food']
   | { ctype: 'transportation' } & CalculateApi.RequestBody['calculations']['transportation']
+)
 
 export const calculate = (input: CalculationInput): CalculationResult => {
   switch (input.ctype) {
@@ -24,8 +26,9 @@ export const calculate = (input: CalculationInput): CalculationResult => {
   }
 }
 
-// TODO: extract request body schema so we can separate the .partial() which is contaminating internal types
+// TODO: extract request body schema to prevent the .partial() from contaminating internal types
 // That way, we won't have to manually wrap types in Required<..>
+// https://github.com/jasontyu/carbon-calculator-next-ts/issues/9
 export const calculateFood = (data: Required<CalculateApi.RequestBody['calculations']>['food']) => {
   // Median GHG emissions (kg CO2eq / NU)
   // from aaq0216_datas2 (https://www.science.org/doi/10.1126/science.aaq0216)

@@ -1,5 +1,5 @@
-import { CalculateApi } from "../pages/api/calculate"
 import axios from 'axios'
+import { CalculateApi } from '../pages/api/calculate'
 
 export const fetchCalculation = async (requestBody: CalculateApi.RequestBody) => {
   const response = await axios.post('/api/calculate', requestBody)

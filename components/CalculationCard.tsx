@@ -1,10 +1,10 @@
-import 'react'
+import React from 'react'
 import { Card, Button, Form } from 'antd'
 
 type ComponentProps = {
   name: string
   title: React.ReactNode
-  children: React.ReactNode
+  children: React.ReactNode // fields.map(field => <Form.Item ... />)
   onSubmit: (values: unknown) => void
 }
 
@@ -22,7 +22,7 @@ export const CalculationCard: React.FC<ComponentProps> = ({ name, title, childre
       >
         { children }
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit">
+          <Button type='primary' htmlType='submit'>
             Submit
           </Button>
         </Form.Item>

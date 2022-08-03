@@ -1,4 +1,4 @@
-import 'react'
+import React from 'react'
 import { Space, Card, Button, Divider, Layout, Typography } from 'antd'
 import { CalculateApi, allCalculationTypes } from '../pages/api/calculate'
 const { Title, Text } = Typography
@@ -37,7 +37,7 @@ export const Sidebar: React.FC<ComponentProps> = ({ calculations, resetCalculati
 
     <Space direction='vertical' size='middle' style={{ margin: '0 12px', width: '276px' }}>
       <Card title='Emissions' size='default' extra={
-        <Button onClick={ resetCalculations } type='ghost' >Reset</Button>
+        <Button onClick={ resetCalculations } type='ghost'>Reset</Button>
       }>
         <Title level={2}>Total: { renderEmissions(totalEmissions) }</Title>
         { allCalculationTypes.map(ctype => (

@@ -1,3 +1,5 @@
+[`carbon-calculator-next-ts.vercel.app`](https://carbon-calculator-next-ts.vercel.app)
+
 ## Overview
 This application renders a form and exposes an API calculation according to the specification of the [SINAI Fullstack Engineer Take-home Challenge](https://www.notion.so/sinaitechnologies/Fullstack-Engineer-Take-home-Challenge-a06771fbb9134092adea6c7b729a35ea)
 
@@ -45,7 +47,7 @@ See [design doc](https://docs.google.com/document/d/1CXUhj5IibDofY0_00KOctsTjEd2
 
 ### Workflows
 * `main` branch is protected - must contribute via Pull Request (PR)
-* CI checks (build lint and tests) are configured via GitHub workflow to run on PR and block merge if failing
+* CI checks (lint and tests) are configured via GitHub workflow to run on PR and block merge if failing
 * In parallel, PR branches are auto-built and deployed as preview sites
 
 ### Lint configuration
@@ -65,6 +67,6 @@ Test environment setup (run before tests) is defined under
 This app is deployed using the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js. 
 
 `main` branch is auto-rebuilt and deployed to production site
-[`carbon-calculator-next-ts.vercel.app`](carbon-calculator-next-ts.vercel.app)
+[`carbon-calculator-next-ts.vercel.app`](https://carbon-calculator-next-ts.vercel.app)
 
 Check out [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

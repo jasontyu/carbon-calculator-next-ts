@@ -17,16 +17,13 @@ const Home: NextPage = () => {
   const updateCalculations = async (data: CalculateApi.RequestBody['calculations']) => {
     console.log('SENDING updateCalculations', data)
     try {
-      const { calculation: newCalculations } = await api.fetchCalculation({
-        calculations: data
-      })
+      const { calculation: newCalculations } = await api.fetchCalculation({ calculations: data })
       setCalculations({
         ...calculations,
         ...newCalculations
       })
     } catch (error) {
       console.error(error)
-      // form input was invalid
     }
   }
 
@@ -45,12 +42,15 @@ const Home: NextPage = () => {
   return (
     <Layout hasSider>
       <BackTop />
-      <Layout className="site-layout" style={{ marginRight: SIDEBAR_WIDTH }}>
-        <Header className="site-layout-background" style={{ padding: 24, height: 84, backgroundColor: 'lightgreen'}}>
+      <Layout style={{ marginRight: SIDEBAR_WIDTH }}>
+        <Header style={{ padding: 24, height: 84, backgroundColor: 'lightgreen'}}>
           <Title>Personal Carbon Footprint Calculator</Title>
         </Header>
         <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
           <Space direction='vertical' style={{ padding: 24, textAlign: 'left' }}>
+            {/* I would have liked to pull each instance of CalculationCard into its own component,
+                but this would require moving Calculations state into a more complex setup (useContext, useReducer, redux etc)
+              */}
             <CalculationCard
               name='food'
               title='Food'

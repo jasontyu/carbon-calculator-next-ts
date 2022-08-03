@@ -2,7 +2,7 @@ import * as EmissionsCalculator from './EmissionsCalculator'
 
 describe('EmissionsCalculator', () => {
 
-  describe('`calculate` calls through to helper and matches snapshot', () => {
+  describe('calculate', () => {
     type TestCase = { input: EmissionsCalculator.CalculationInput, helper: keyof typeof EmissionsCalculator }
     const cases: TestCase[] = [
       { input: { ctype: 'food', bread: 100, meat: 200, vegetables: 300 }, helper: 'calculateFood' },
@@ -12,15 +12,16 @@ describe('EmissionsCalculator', () => {
     // This is the more intuitive approach, but it doesn't work
     // because the mapping in `EmissionsCalculator.calculate` does not get spied on properly
     // const itShouldCallThroughCorrectly = (testCase: TestCase) => {
-    //     const { input, spy } = testCase
+    //     const { input, helper } = testCase
     //     it(`for type '${input.ctype}'`, () => {
     //     const { ctype, ...data } = input
-    //       const spyInstance = jest.spyOn(EmissionsCalculator, spy)
-    //       EmissionsCalculator.calculate(input)
-    //       expect(spyInstance).toHaveBeenCalledWith(data)
+    //       const spy = jest.spyOn(EmissionsCalculator, helper)
+    //       const result = EmissionsCalculator.calculate(input)
+    //       expect(spy).toHaveBeenCalledWith(data)
+    //       expect(result).toMatchSnapshot()
     //   })
     // }
-    // cases.forEach(testCase => itShouldCallThroughCorrectly(testCase))
+    // cases.forEach(testCase => itShouldCallThroughAndMatchSnapshot(testCase))
 
     // So instead, we use a slightly hackier way to assert that it calls through correctly
     const itShouldCallThroughAndMatchSnapshot = (testCase: TestCase) => {

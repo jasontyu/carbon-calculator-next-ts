@@ -6,8 +6,7 @@ import HomePage from '../../pages/index'
 import { allCalculationTypes, CalculationType } from '../../pages/api/calculate'
 
 describe('HomePage', () => {
-  // Consider extracting header and footer into components
-  // They're pretty simple, so maybe not worth the overhead at the moment
+
   it('should render header and footer', () => {
     render(<HomePage />)
 
@@ -47,7 +46,6 @@ describe('HomePage', () => {
   // we also get to do integration-level tests (across components)
   // To gain even more confidence, consider moving this suite to an E2E test framework like Cypress to avoid API mocking
   describe('integration tests', () => {
-
     let scope: nock.Scope
     beforeEach(() => {
       scope = nock('http://localhost')
@@ -57,8 +55,6 @@ describe('HomePage', () => {
     })
 
     it('should submit calculations, update emissions sidebar, and reset', async () => {
-      render(<HomePage />)
-
       scope
         .post('/api/calculate', { calculations: { food: { meat: 4200, vegetables: 0, bread: 0 } } })
         .reply(200, {
@@ -73,6 +69,9 @@ describe('HomePage', () => {
           }
         })
 
+      render(<HomePage />)
+
+      // submit 1 field in food
       await userEvent.type(screen.getByRole('spinbutton', { name: /meat/i }), '4200')
       await userEvent.click(
         within(screen.getByRole('form', { name: /food/i }))
@@ -80,6 +79,7 @@ describe('HomePage', () => {
       )
       await waitFor(() => expect(screen.getByRole('heading', { name: /total/i })).toHaveTextContent('Total: 100'))
 
+      // submit all 3 fields in transportation
       await userEvent.type(screen.getByRole('spinbutton', { name: /bus/i }), '1')
       await userEvent.type(screen.getByRole('spinbutton', { name: /car/i }), '2')
       await userEvent.type(screen.getByRole('spinbutton', { name: /plane/i }), '3')
@@ -89,6 +89,7 @@ describe('HomePage', () => {
       )
       await waitFor(() => expect(screen.getByRole('heading', { name: /total/i })).toHaveTextContent('Total: 300'))
 
+      // reset
       await userEvent.click(screen.getByRole('button', { name: /reset/i }))
       await waitFor(() => expect(screen.getByRole('heading', { name: /total/i })).toHaveTextContent('Total: 0'))
     })
