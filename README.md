@@ -47,7 +47,7 @@ See [design doc](https://docs.google.com/document/d/1CXUhj5IibDofY0_00KOctsTjEd2
 
 ### Workflows
 * `main` branch is protected - must contribute via Pull Request (PR)
-* CI checks (build lint and tests) are configured via GitHub workflow to run on PR and block merge if failing
+* CI checks (lint and tests) are configured via GitHub workflow to run on PR and block merge if failing
 * In parallel, PR branches are auto-built and deployed as preview sites
 
 ### Lint configuration
