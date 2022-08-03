@@ -5,7 +5,6 @@ import userEvent from '@testing-library/user-event'
 import { Form, InputNumber } from 'antd'
 import { CalculationCard } from './CalculationCard'
 
-
 describe('CalculationCard', () => {
   let props: React.ComponentProps<typeof CalculationCard>
   let onSubmit: jest.Mock
@@ -20,14 +19,14 @@ describe('CalculationCard', () => {
   })
 
   it('should render title and children correctly', () => {
-    render(<CalculationCard {...props}></CalculationCard>)
+    render(<CalculationCard {...props} />)
 
     expect(screen.getByRole('form', { name: 'Food' })).toBeInTheDocument()
     expect(screen.getByLabelText('bread')).toBeInTheDocument()
   })
 
   it('on clicking submit, should call onSubmit with form values', async () => {
-    render(<CalculationCard {...props}></CalculationCard>)
+    render(<CalculationCard {...props} />)
 
     await userEvent.type(screen.getByRole('spinbutton'), '42')
     await userEvent.click(screen.getByRole('button', {name: /submit/i }))
