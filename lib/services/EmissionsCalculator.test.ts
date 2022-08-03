@@ -2,7 +2,7 @@ import * as EmissionsCalculator from './EmissionsCalculator'
 
 describe('EmissionsCalculator', () => {
 
-  describe('`calculate` calls through to helper and matches snapshot', () => {
+  describe('calculate', () => {
     type TestCase = { input: EmissionsCalculator.CalculationInput, helper: keyof typeof EmissionsCalculator }
     const cases: TestCase[] = [
       { input: { ctype: 'food', bread: 100, meat: 200, vegetables: 300 }, helper: 'calculateFood' },
