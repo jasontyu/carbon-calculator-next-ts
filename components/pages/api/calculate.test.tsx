@@ -1,13 +1,9 @@
 import { createMocks } from 'node-mocks-http'
-import type { NextApiRequest, NextApiResponse } from 'next'
 
 import handler from '../../../pages/api/calculate'
 import * as EmissionsCalculator from '../../../lib/services/EmissionsCalculator'
 
 describe('calculate API', () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const getDataFromResponse = (res: any) => JSON.parse(res._getData())
-
   let calculateSpy: jest.SpyInstance
   beforeEach(() => {
     calculateSpy = jest.spyOn(EmissionsCalculator, 'calculate')
@@ -16,6 +12,9 @@ describe('calculate API', () => {
   afterEach(() => {
     jest.restoreAllMocks()
   })
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const getDataFromResponse = (res: any) => JSON.parse(res._getData()) // https://seanconnolly.dev/unit-testing-nextjs-api-routes
 
   describe('validation', () => {
     const zodCases = [
@@ -26,14 +25,14 @@ describe('calculate API', () => {
       { title: 'recognized calculationType but not wrapped in calculations', body: { food: { bread: 400, meat: 400, vegetables: 400 } } },
     ]
     zodCases.forEach(({ title, body }) => it(`400 when ${title}`, async () => {
-      const { req, res }: { req: NextApiRequest, res: NextApiResponse } = createMocks({ method: 'POST', body })
+      const { req, res } = createMocks({ method: 'POST', body })
       await handler(req, res)
 
       expect(res.statusCode).toBe(400)
     }))
 
     it('405 when method !== POST', async () => {
-      const { req, res }: { req: NextApiRequest, res: NextApiResponse } = createMocks({ method: 'GET' })
+      const { req, res } = createMocks({ method: 'GET' })
       await handler(req, res)
 
       expect(res.statusCode).toBe(405)
@@ -64,7 +63,7 @@ describe('calculate API', () => {
         transportation: { bus: 0, car: 0, plane: 0 }
       }
     }
-    const { req, res }: { req: NextApiRequest, res: NextApiResponse } = createMocks({ method: 'POST', body })
+    const { req, res } = createMocks({ method: 'POST', body })
     await handler(req, res)
 
     expect(res.statusCode).toBe(200)
